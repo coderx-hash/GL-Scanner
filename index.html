@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart GL Data Extractor Pro</title>
-    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart GL Data Extractor Pro V2</title>
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -19,7 +19,7 @@
             --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -28,7 +28,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             color: var(--text-dark);
         }
 
@@ -45,7 +45,7 @@
         /* Header */
         .header {
             background: var(--primary);
-            padding: 25px 30px;
+            padding: 20px 25px;
             text-align: center;
             color: white;
             position: relative;
@@ -53,27 +53,27 @@
         
         .header h1 {
             font-family: 'Poppins', sans-serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
 
         .header p {
-            font-size: 12px;
-            opacity: 0.8;
+            font-size: 11px;
+            opacity: 0.85;
             margin-top: 5px;
         }
 
         /* Content Area */
         .content {
-            padding: 30px;
+            padding: 25px;
         }
 
         /* Upload Zone */
         .upload-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 12px;
-            padding: 30px 20px;
+            padding: 25px 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -82,16 +82,17 @@
             overflow: hidden;
         }
 
+        .upload-zone:active { transform: scale(0.98); }
+
         .upload-zone:hover, .upload-zone.dragover {
             border-color: var(--primary);
             background: #eff6ff;
-            transform: translateY(-2px);
         }
 
         .upload-icon {
-            font-size: 40px;
+            font-size: 35px;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .upload-text {
@@ -101,7 +102,7 @@
         }
 
         .upload-subtext {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-light);
             margin-top: 5px;
         }
@@ -114,12 +115,14 @@
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid #e2e8f0;
+            max-height: 250px; /* Limit height on mobile */
         }
 
         #preview-img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            filter: grayscale(20%);
         }
 
         .scan-overlay {
@@ -128,11 +131,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.2), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.4), transparent);
             transform: translateY(-100%);
-            animation: scan 2s infinite linear;
+            animation: scan 1.5s infinite linear;
             display: none;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+            z-index: 10;
         }
 
         @keyframes scan {
@@ -140,31 +144,32 @@
             100% { transform: translateY(100%); }
         }
 
-        /* Form Fields */
+        /* Results */
         .result-section {
             margin-top: 25px;
-            opacity: 0.5;
+            opacity: 0.4;
             pointer-events: none;
             transition: opacity 0.3s;
+            filter: blur(1px);
         }
         
         .result-section.active {
             opacity: 1;
             pointer-events: all;
+            filter: blur(0);
         }
 
         .field-group {
-            margin-bottom: 18px;
-            position: relative;
+            margin-bottom: 15px;
         }
 
         .field-label {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-light);
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: block;
         }
 
@@ -184,19 +189,20 @@
         }
 
         .input-wrapper i {
-            padding-left: 15px;
+            padding-left: 12px;
             color: var(--text-light);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
             border: none;
             background: transparent;
             font-size: 14px;
             font-weight: 600;
             color: var(--text-dark);
+            text-overflow: ellipsis;
         }
 
         .copy-btn {
@@ -206,13 +212,14 @@
             padding: 8px 12px;
             margin-right: 5px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 5px;
+            white-space: nowrap;
         }
 
         .copy-btn:hover {
@@ -230,32 +237,57 @@
         /* Loading Indicator */
         #status-msg {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--primary);
             font-weight: 600;
             margin-top: 15px;
-            height: 20px;
+            min-height: 20px;
+            transition: color 0.3s;
         }
 
         /* Utilities */
         canvas { display: none; }
         input[type="file"] { display: none; }
         
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 10px;
+            height: 4px;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .container { border-radius: 15px; }
+            .header { padding: 15px 20px; }
+            .content { padding: 20px; }
+            input { font-size: 13px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1><i class="fas fa-file-medical-alt"></i> GL Data Extractor</h1>
-        <p>OCR Technology • Fast & Accurate</p>
+        <h1><i class="fas fa-robot"></i> Smart GL Extractor V2</h1>
+        <p>Enhanced Optical Character Recognition</p>
     </div>
 
     <div class="content">
         <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-text">Click to Upload or Drag Image Here</div>
-            <div class="upload-subtext">Supports JPG, PNG (Clear Screenshots)</div>
+            <div class="upload-icon"><i class="fas fa-camera"></i></div>
+            <div class="upload-text">Tap to Upload Image</div>
+            <div class="upload-subtext">JPG, PNG, Screenshot</div>
             <input type="file" id="file-input" accept="image/*">
         </div>
 
@@ -265,27 +297,30 @@
         </div>
 
         <div id="status-msg"></div>
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
 
         <div class="result-section" id="results">
             
             <div class="field-group">
-                <label class="field-label">PHD Reference Number</label>
+                <label class="field-label">Reference Number (GL/PHD)</label>
                 <div class="input-wrapper">
                     <i class="fas fa-hashtag"></i>
                     <input type="text" id="gl-num" readonly placeholder="...">
                     <button class="copy-btn" onclick="copyText('gl-num', this)">
-                        <i class="fas fa-copy"></i> Copy
+                        <i class="fas fa-copy"></i>
                     </button>
                 </div>
             </div>
 
             <div class="field-group">
-                <label class="field-label">Beneficiary Name</label>
+                <label class="field-label">Beneficiary / Patient</label>
                 <div class="input-wrapper">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-user-circle"></i>
                     <input type="text" id="gl-name" readonly placeholder="...">
                     <button class="copy-btn" onclick="copyText('gl-name', this)">
-                        <i class="fas fa-copy"></i> Copy
+                        <i class="fas fa-copy"></i>
                     </button>
                 </div>
             </div>
@@ -293,10 +328,10 @@
             <div class="field-group">
                 <label class="field-label">Total Amount</label>
                 <div class="input-wrapper">
-                    <i class="fas fa-coins"></i>
+                    <i class="fas fa-money-bill-wave"></i>
                     <input type="text" id="gl-amount" readonly placeholder="...">
                     <button class="copy-btn" onclick="copyText('gl-amount', this)">
-                        <i class="fas fa-copy"></i> Copy
+                        <i class="fas fa-copy"></i>
                     </button>
                 </div>
             </div>
@@ -317,74 +352,98 @@
     const resultSection = document.getElementById('results');
     const canvas = document.getElementById('helper-canvas');
     const ctx = canvas.getContext('2d');
+    const progressBar = document.getElementById('progress-bar');
+    const progressContainer = document.getElementById('progress-container');
 
-    // Drag & Drop Events
+    // Drag & Drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults, false);
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault(); e.stopPropagation();
+        }, false);
     });
-
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
 
     dropZone.addEventListener('dragover', () => dropZone.classList.add('dragover'));
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', handleDrop);
-
-    function handleDrop(e) {
+    dropZone.addEventListener('drop', (e) => {
         dropZone.classList.remove('dragover');
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles(files);
-    }
-
-    fileInput.addEventListener('change', function(e) {
-        handleFiles(e.target.files);
+        if (e.dataTransfer.files.length) processImage(e.dataTransfer.files[0]);
     });
 
-    function handleFiles(files) {
-        if (files.length > 0) {
-            const file = files[0];
-            processImage(file);
-        }
-    }
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) processImage(e.target.files[0]);
+    });
 
+    // IMAGE PROCESSING LOGIC
     function processImage(file) {
-        // Reset inputs
-        document.querySelectorAll('input[type="text"]').forEach(input => input.value = 'Analyzing...');
+        // Reset UI
+        document.querySelectorAll('input[type="text"]').forEach(input => input.value = '...');
         resultSection.classList.remove('active');
+        statusMsg.style.color = 'var(--primary)';
         
-        // Show Preview
         const reader = new FileReader();
         reader.onload = function(event) {
             previewImg.src = event.target.result;
             previewContainer.style.display = 'block';
-            
-            // Start Animation
             scanEffect.style.display = 'block';
-            statusMsg.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing OCR... Please wait';
-            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '10%';
+            statusMsg.innerHTML = '<i class="fas fa-cog fa-spin"></i> Optimizing Image...';
+
             const img = new Image();
             img.onload = function() {
-                // Image Pre-processing Logic
-                const scale = 2; 
-                canvas.width = img.width * scale;
-                canvas.height = img.height * scale;
-                
-                // Enhance contrast for better reading
-                ctx.filter = 'grayscale(100%) contrast(150%)';
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                // 1. PRE-PROCESSING: Resize and Binarize for Speed & Accuracy
+                // Max width 1800px balances speed (5s) and detail
+                const maxWidth = 1800;
+                let width = img.width;
+                let height = img.height;
 
-                // Run Tesseract
-                Tesseract.recognize(canvas, 'eng')
-                .then(({ data: { text } }) => {
-                    console.log("Raw Text:", text);
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                
+                // Draw image to canvas
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // 2. APPLY BINARIZATION (Make it Black & White for OCR)
+                // This helps reading blurred text significantly
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                
+                // Simple thresholding
+                for (let i = 0; i < data.length; i += 4) {
+                    const brightness = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
+                    const threshold = brightness < 140 ? 0 : 255; // Dark becomes black, light becomes white
+                    data[i] = threshold; // R
+                    data[i + 1] = threshold; // G
+                    data[i + 2] = threshold; // B
+                }
+                ctx.putImageData(imageData, 0, 0);
+
+                // 3. RUN TESSERACT V5
+                statusMsg.innerHTML = '<i class="fas fa-eye"></i> Reading Text...';
+                
+                Tesseract.recognize(
+                    canvas.toDataURL('image/jpeg', 0.8),
+                    'eng',
+                    {
+                        logger: m => {
+                            if (m.status === 'recognizing text') {
+                                progressBar.style.width = Math.floor(m.progress * 100) + '%';
+                            }
+                        }
+                    }
+                ).then(({ data: { text } }) => {
+                    console.log("Extracted:", text);
                     parseData(text);
-                })
-                .catch(err => {
-                    statusMsg.textContent = "Error reading image.";
+                }).catch(err => {
+                    console.error(err);
+                    statusMsg.textContent = "Could not read image. Please try again.";
                     scanEffect.style.display = 'none';
+                    progressBar.style.width = '0%';
                 });
             };
             img.src = event.target.result;
@@ -393,27 +452,41 @@
     }
 
     function parseData(rawText) {
-        const text = rawText.replace(/\n/g, ' '); // Linearize text
+        // Normalize text: remove excessive newlines, fix common OCR visual errors
+        let text = rawText.replace(/\n/g, ' ').replace(/\s+/g, ' ');
+        
+        // --- IMPROVED REGEX LOGIC ---
 
-        // 1. Logic for PHD Number
-        const phdMatch = text.match(/(PHD|PHO|PID)-?\d{10,14}-?[A-Z0-9]{3}/i);
-        const phdValue = phdMatch ? phdMatch[0].toUpperCase() : "Not Found";
+        // 1. GL / PHD Number
+        // Looks for patterns like "PHD-1234..." or "GL-..."
+        // Handles O/0 confusion and S/5 confusion slightly
+        const refMatch = text.match(/(PHD|PHO|GL|PID)[\s-]?[0-9O]{8,15}[A-Z0-9-]{0,5}/i);
+        const refValue = refMatch ? refMatch[0].toUpperCase().replace(/O/g, '0') : "Not Found";
 
-        // 2. Logic for Name
-        const nameMatch = text.match(/request for\s+([A-Z\s.]+)\s+to defray/i);
-        const nameValue = nameMatch ? nameMatch[1].trim() : "Not Found";
+        // 2. Beneficiary Name
+        // Logic: Look for "Patient", "Request for", "Member" followed by capital words
+        // Excludes "The" or "Medical" to avoid grabbing headers
+        const nameMatch = text.match(/(?:request for|patient name|patient|beneficiary|member|name)\s*[:.]?\s*(?:is|:)?\s*([A-Z\s.-]+?)(?=\s+(?:to|age|sex|patient|confinement|diagnosis))/i);
+        // Fallback for simple name lines if above fails
+        const nameFallback = text.match(/request for\s+([A-Z\s.]+)\s+to/i);
+        
+        let nameValue = "Not Found";
+        if (nameMatch && nameMatch[1].length > 3) nameValue = nameMatch[1].trim();
+        else if (nameFallback && nameFallback[1].length > 3) nameValue = nameFallback[1].trim();
 
-        // 3. Logic for Amount
-        const amountMatch = text.match(/(?:P|PHP|₱)\s?(\d{1,3}(?:,\d{3})*(?:\.\d{2}))/i);
+        // 3. Amount
+        // Look for P, PHP, or just numbers with commas near keywords like "Total", "Amount", "Cover"
+        const amountMatch = text.match(/(?:amount|total|approved|coverage|PHP|P|₱)\s*[:.]?\s*(?:PHP|P|₱)?\s*([\d,]+\.\d{2})/i);
         const amountValue = amountMatch ? amountMatch[1] : "Not Found";
 
-        // Update UI
-        document.getElementById('gl-num').value = phdValue;
+        // Update Fields
+        document.getElementById('gl-num').value = refValue;
         document.getElementById('gl-name').value = nameValue;
         document.getElementById('gl-amount').value = amountValue;
 
-        // Finish Animation
+        // Finish
         scanEffect.style.display = 'none';
+        progressContainer.style.display = 'none';
         statusMsg.innerHTML = '<i class="fas fa-check-circle"></i> Extraction Complete';
         statusMsg.style.color = 'var(--success)';
         resultSection.classList.add('active');
@@ -421,13 +494,13 @@
 
     function copyText(id, btnElement) {
         const input = document.getElementById(id);
-        if (input.value && input.value !== "Not Found" && input.value !== "Analyzing...") {
+        if (input.value && input.value !== "Not Found" && input.value !== "...") {
             input.select();
-            document.execCommand('copy');
+            input.setSelectionRange(0, 99999); // Mobile fix
+            navigator.clipboard.writeText(input.value);
             
-            // Visual Feedback
             const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = '<i class="fas fa-check"></i> Copied';
+            btnElement.innerHTML = '<i class="fas fa-check"></i>';
             btnElement.classList.add('copied');
 
             setTimeout(() => {
